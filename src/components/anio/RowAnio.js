@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { ClienteContext } from "../../contexts/clienteContext";
+import { AnioContext } from "../../contexts/anioContext";
 import { ModalContext } from "../../contexts/modalContex";
 
-const RowCliente = ({ cliente }) => {
+const RowAnio = ({ anio }) => {
   const { setModalTitle, setShowModal } = useContext(ModalContext);
-  const { obtenerCliente, eliminarCliente } = useContext(ClienteContext);
+  const { obtenerAnio, eliminarAnio } = useContext(AnioContext);
 
-  const abrirModalModificarCliente = () => {
-    obtenerCliente(cliente);
-    setModalTitle("Modificar cliente");
+  const abrirModalModificarAnio = () => {
+    obtenerAnio(anio);
+    setModalTitle("Modificar año");
     setShowModal(true);
   };
 
@@ -18,7 +18,7 @@ const RowCliente = ({ cliente }) => {
         <button
           className="button is-small is-info mr-1"
           title="Modificar"
-          onClick={() => abrirModalModificarCliente()}
+          onClick={() => abrirModalModificarAnio()}
         >
           <span className="icon is-small">
             <i className="fas fa-edit"></i>
@@ -27,20 +27,17 @@ const RowCliente = ({ cliente }) => {
         <button
           className="button is-small is-danger"
           title="Eliminar"
-          onClick={() => eliminarCliente(cliente.idUser)}
+          onClick={() => eliminarAnio(anio.idanio)}
         >
           <span className="icon is-small">
             <i className="fas fa-trash-alt"></i>
           </span>
         </button>
       </td>
-      <td>{cliente.nombres}</td>
-      <td>{cliente.apellidos}</td>
-      <td>{cliente.direccion}</td>
-      <td>{cliente.telefono}</td>
-      <td>{cliente.email}</td>
+      <td>{anio.descripcion}</td>
+      <td>{anio.notaMinima}</td>
     </tr>
   );
 };
 
-export default RowCliente;
+export default RowAnio;

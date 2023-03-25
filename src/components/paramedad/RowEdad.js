@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { ClienteContext } from "../../contexts/clienteContext";
+import { EdadContext } from "../../contexts/edadContext";
 import { ModalContext } from "../../contexts/modalContex";
 
-const RowCliente = ({ cliente }) => {
+const RowEdad = ({ edad }) => {
   const { setModalTitle, setShowModal } = useContext(ModalContext);
-  const { obtenerCliente, eliminarCliente } = useContext(ClienteContext);
+  const { obtenerEdad, eliminarEdad } = useContext(EdadContext);
 
-  const abrirModalModificarCliente = () => {
-    obtenerCliente(cliente);
-    setModalTitle("Modificar cliente");
+  const abrirModalModificarEdad = () => {
+    obtenerEdad(edad);
+    setModalTitle("Modificar edad");
     setShowModal(true);
   };
 
@@ -18,7 +18,7 @@ const RowCliente = ({ cliente }) => {
         <button
           className="button is-small is-info mr-1"
           title="Modificar"
-          onClick={() => abrirModalModificarCliente()}
+          onClick={() => abrirModalModificarEdad()}
         >
           <span className="icon is-small">
             <i className="fas fa-edit"></i>
@@ -27,20 +27,17 @@ const RowCliente = ({ cliente }) => {
         <button
           className="button is-small is-danger"
           title="Eliminar"
-          onClick={() => eliminarCliente(cliente.idUser)}
+          onClick={() => eliminarEdad(edad.TABLAID)}
         >
           <span className="icon is-small">
             <i className="fas fa-trash-alt"></i>
           </span>
         </button>
       </td>
-      <td>{cliente.nombres}</td>
-      <td>{cliente.apellidos}</td>
-      <td>{cliente.direccion}</td>
-      <td>{cliente.telefono}</td>
-      <td>{cliente.email}</td>
+      <td>{edad.edadMin}</td>
+      <td>{edad.edadMax}</td>
     </tr>
   );
 };
 
-export default RowCliente;
+export default RowEdad;

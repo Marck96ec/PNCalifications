@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { ClienteContext } from "../../contexts/clienteContext";
+import { DestrezaContext } from "../../contexts/destrezaContext";
 import { ModalContext } from "../../contexts/modalContex";
 
-const RowCliente = ({ cliente }) => {
+const RowDestreza = ({ destreza }) => {
   const { setModalTitle, setShowModal } = useContext(ModalContext);
-  const { obtenerCliente, eliminarCliente } = useContext(ClienteContext);
+  const { obtenerDestreza, eliminarDestreza } = useContext(DestrezaContext);
 
-  const abrirModalModificarCliente = () => {
-    obtenerCliente(cliente);
-    setModalTitle("Modificar cliente");
+  const abrirModalModificarDestreza = () => {
+    obtenerDestreza(destreza);
+    setModalTitle("Modificar destreza");
     setShowModal(true);
   };
 
@@ -18,7 +18,7 @@ const RowCliente = ({ cliente }) => {
         <button
           className="button is-small is-info mr-1"
           title="Modificar"
-          onClick={() => abrirModalModificarCliente()}
+          onClick={() => abrirModalModificarDestreza()}
         >
           <span className="icon is-small">
             <i className="fas fa-edit"></i>
@@ -27,20 +27,16 @@ const RowCliente = ({ cliente }) => {
         <button
           className="button is-small is-danger"
           title="Eliminar"
-          onClick={() => eliminarCliente(cliente.idUser)}
+          onClick={() => eliminarDestreza(destreza.idDestreza)}
         >
           <span className="icon is-small">
             <i className="fas fa-trash-alt"></i>
           </span>
         </button>
       </td>
-      <td>{cliente.nombres}</td>
-      <td>{cliente.apellidos}</td>
-      <td>{cliente.direccion}</td>
-      <td>{cliente.telefono}</td>
-      <td>{cliente.email}</td>
+      <td>{destreza.descDestreza}</td>
     </tr>
   );
 };
 
-export default RowCliente;
+export default RowDestreza;

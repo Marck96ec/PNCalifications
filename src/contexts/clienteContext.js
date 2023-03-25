@@ -1,69 +1,74 @@
-import React, { createContext, useReducer } from 'react';
-import ClienteRedurcer from '../reducer/clienteReducer';
+import React, { createContext, useReducer } from "react";
+import ClienteRedurcer from "../reducer/clienteReducer";
 
-import Axios from 'axios';
-import Swal from 'sweetalert2'
+import Axios from "axios";
+import Swal from "sweetalert2";
 
-import { ELIMINAR_CLIENTE, MODIFICAR_CLIENTE, OBTENER_CLIENTE, OBTENER_CLIENTES, REGISTRAR_CLIENTE } from '../const/actionTypes';
+import {
+  ELIMINAR_CLIENTE,
+  MODIFICAR_CLIENTE,
+  OBTENER_CLIENTE,
+  OBTENER_CLIENTES,
+  REGISTRAR_CLIENTE,
+} from "../const/actionTypes";
 
 export const ClienteContext = createContext();
 
-export const ClienteContextProvider = props => {
-
+export const ClienteContextProvider = (props) => {
   const initialState = {
     clientesList: [],
-    clienteActual: null
-  }
+    clienteActual: null,
+  };
 
   const [state, dispatch] = useReducer(ClienteRedurcer, initialState);
 
   const obtenerClientes = async () => {
     try {
-      const resultado = await Axios.get('/clientes');
+      const resultado = await Axios.get("/user");
       dispatch({
         type: OBTENER_CLIENTES,
-        payload: resultado.data
-      })
+        payload: resultado.data,
+      });
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'No se pudo obtener los clientes',
-        toast: true
+        icon: "error",
+        title: "Error",
+        text: "No se pudo obtener los clientes",
+        toast: true,
       });
       console.log(error);
     }
-  }
+  };
 
-  const registrarCliente = async cliente => {
+  const registrarCliente = async (cliente) => {
     try {
-      const resultado = await Axios.post('/clientes', cliente);
+      const resultado = await Axios.post("/user", cliente);
       dispatch({
         type: REGISTRAR_CLIENTE,
-        payload: resultado.data
-      })
+        payload: resultado.data,
+      });
       Swal.fire({
-        icon: 'success',
-        title: 'Correcto',
-        text: 'Cliente registrado correctamente.',
-        toast: true
+        icon: "success",
+        title: "Correcto",
+        text: "Cliente registrado correctamente.",
+        toast: true,
       });
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'No se pudo registrar el cliente',
-        toast: true
+        icon: "error",
+        title: "Error",
+        text: "No se pudo registrar el cliente",
+        toast: true,
       });
       console.log(error);
     }
-  }
-  
-  const obtenerCliente = async cliente => {
+  };
+
+  const obtenerCliente = async (cliente) => {
     try {
       let clienteEncontrado = null;
-      if(cliente !== null) {
-        const resultado = await Axios.get(`/clientes/${cliente.idCliente}`);
+      if (cliente !== null) {
+        const resultado = await Axios.get(`/user/${cliente.idUser}`);
         clienteEncontrado = resultado.data;
       } else {
         clienteEncontrado = cliente;
@@ -71,82 +76,80 @@ export const ClienteContextProvider = props => {
 
       dispatch({
         type: OBTENER_CLIENTE,
-        payload: clienteEncontrado
-      })
-
+        payload: clienteEncontrado,
+      });
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'No se pudo obtener el cliente',
-        toast: true
+        icon: "error",
+        title: "Error",
+        text: "No se pudo obtener el cliente",
+        toast: true,
       });
       console.log(error);
     }
-  }
+  };
 
-  const actualizarCliente = async cliente => {
+  const actualizarCliente = async (cliente) => {
     try {
-      const resultado = await Axios.put(`/clientes`, cliente);
-        
+      const resultado = await Axios.put(`/user`, cliente);
+
       dispatch({
         type: MODIFICAR_CLIENTE,
         payload: resultado.data,
-      })
+      });
 
       Swal.fire({
-        icon: 'success',
-        title: 'Correcto',
-        text: 'Cliente modificado correctamente.',
-        toast: true
+        icon: "success",
+        title: "Correcto",
+        text: "Cliente modificado correctamente.",
+        toast: true,
       });
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'No se pudo modificar el cliente',
-        toast: true
+        icon: "error",
+        title: "Error",
+        text: "No se pudo modificar el cliente",
+        toast: true,
       });
       console.log(error);
     }
-  }
+  };
 
-  const eliminarCliente = async idCliente => {
+  const eliminarCliente = async (idUser) => {
     try {
-
       Swal.fire({
-        title: '¿Desea continuar?',
-        text: 'Se eliminará el cliente seleccionado',
-        icon: 'question',
+        title: "¿Desea continuar?",
+        text: "Se eliminará el cliente seleccionado",
+        icon: "question",
         showCancelButton: true,
-        confirmButtonText: 'Si, eliminar'
+        confirmButtonText: "Si, eliminar",
       }).then(async (result) => {
-        if(result.value) {
-          await Axios.delete(`/clientes/${idCliente}`);
-          
+        if (result.value) {
+          await Axios.delete(`/user/${idUser}`);
+
           dispatch({
             type: ELIMINAR_CLIENTE,
-            payload: idCliente
-          })
-          
+            payload: idUser,
+          });
+
           Swal.fire({
-            icon: 'success',
-            title: 'Correcto',
-            text: 'Cliente eliminado correctamente.',
-            toast: true
+            icon: "success",
+            title: "Correcto",
+            text: "Cliente eliminado correctamente.",
+            toast: true,
           });
         }
-      })
+      });
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'No se pudo eliminar el cliente',
-        toast: true
+        icon: "error",
+        title: "Error",
+        text: "No se pudo eliminar el cliente",
+        toast: true,
       });
       console.log(error);
     }
-  }
+  };
 
   return (
     <ClienteContext.Provider
@@ -163,5 +166,5 @@ export const ClienteContextProvider = props => {
     >
       {props.children}
     </ClienteContext.Provider>
-  )
-}
+  );
+};
