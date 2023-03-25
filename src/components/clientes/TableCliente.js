@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
-import RowCliente from './RowCliente';
-import { ClienteContext } from '../../contexts/clienteContext';
+import React, { useContext, useEffect } from "react";
+import RowCliente from "./RowCliente";
+import { ClienteContext } from "../../contexts/clienteContext";
 
 const TableCliente = () => {
-
   const { clientesList, obtenerClientes } = useContext(ClienteContext);
 
   useEffect(() => {
@@ -11,7 +10,12 @@ const TableCliente = () => {
     // eslint-disable-next-line
   }, []);
 
-  if (clientesList.length === 0) return <center><p>No existen clientes.</p></center>
+  if (clientesList.length === 0)
+    return (
+      <center>
+        <p>No existen clientes.</p>
+      </center>
+    );
 
   return (
     <div className="table-container">
@@ -27,15 +31,13 @@ const TableCliente = () => {
           </tr>
         </thead>
         <tbody>
-          {
-            clientesList.map(cliente => (
-              <RowCliente cliente={cliente} key={cliente.idCliente} />
-            ))
-          }
+          {clientesList.map((cliente) => (
+            <RowCliente cliente={cliente} key={cliente.idUser} />
+          ))}
         </tbody>
       </table>
     </div>
   );
-}
- 
+};
+
 export default TableCliente;

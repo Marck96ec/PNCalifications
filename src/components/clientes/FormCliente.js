@@ -1,31 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ClienteContext } from '../../contexts/clienteContext';
-import { ModalContext } from '../../contexts/modalContex';
+import React, { useContext, useEffect, useState } from "react";
+import { ClienteContext } from "../../contexts/clienteContext";
+import { ModalContext } from "../../contexts/modalContex";
 
 const FormCliente = () => {
-
   const { setShowModal } = useContext(ModalContext);
 
-  const { registrarCliente, actualizarCliente, clienteActual, obtenerCliente } = useContext(ClienteContext);
+  const { registrarCliente, actualizarCliente, clienteActual, obtenerCliente } =
+    useContext(ClienteContext);
 
   const clienteDefault = {
-    nombres: '',
-    apellidos: '',
-    direccion: '',
-    telefono: '',
-    email: ''
-  }
+    nombres: "",
+    apellidos: "",
+    direccion: "",
+    telefono: "",
+    email: "",
+  };
 
   const [cliente, setCliente] = useState(clienteDefault);
   const [mensaje, setMensaje] = useState(null);
 
-  useEffect( () => {
-
-    if(clienteActual !== null) {
+  useEffect(() => {
+    if (clienteActual !== null) {
       setCliente({
         ...clienteActual,
-        direccion: clienteActual.direccion ? clienteActual.direccion : '',
-        telefono: clienteActual.telefono ? clienteActual.telefono : '',
+        direccion: clienteActual.direccion ? clienteActual.direccion : "",
+        telefono: clienteActual.telefono ? clienteActual.telefono : "",
       });
     } else {
       setCliente(clienteDefault);
@@ -33,24 +32,28 @@ const FormCliente = () => {
     // eslint-disable-next-line
   }, [clienteActual]);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setCliente({
       ...cliente,
-      [e.target.name] : e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  const handleOnSubmit = e => {
+  const handleOnSubmit = (e) => {
     e.preventDefault();
 
     //validar
-    if (cliente.nombres.trim() === '' && cliente.apellidos.trim() === '' && cliente.email.trim() === '') {
-      setMensaje('Los nombres, apellidos y el email son obligatorios.');
+    if (
+      cliente.nombres.trim() === "" &&
+      cliente.apellidos.trim() === "" &&
+      cliente.email.trim() === ""
+    ) {
+      setMensaje("Los nombres, apellidos y el email son obligatorios.");
       return;
     }
-    
+
     //obtener objeto a enviar
-    if(clienteActual !== null) {
+    if (clienteActual !== null) {
       actualizarCliente(obtenerClienteAEnviar());
     } else {
       registrarCliente(obtenerClienteAEnviar());
@@ -58,30 +61,29 @@ const FormCliente = () => {
 
     //cerrar y limpiar el modal
     cerrarModal();
-  }
+  };
 
   const limpiarForm = () => {
     setMensaje(null);
     setCliente(clienteDefault);
-  }
+  };
 
   const cerrarModal = () => {
     limpiarForm();
     setShowModal(false);
     obtenerCliente(null);
-  }
+  };
 
   const obtenerClienteAEnviar = () => {
-    let clienteTemp = {...cliente};
-    if(clienteTemp.direccion === "") delete clienteTemp.direccion;
-    if(clienteTemp.telefono === "") delete clienteTemp.telefono;
+    let clienteTemp = { ...cliente };
+    if (clienteTemp.direccion === "") delete clienteTemp.direccion;
+    if (clienteTemp.telefono === "") delete clienteTemp.telefono;
     return clienteTemp;
-  }
+  };
 
   return (
     <form onSubmit={handleOnSubmit}>
-
-      { mensaje ? <div className="notification is-danger">{mensaje}</div> : null }
+      {mensaje ? <div className="notification is-danger">{mensaje}</div> : null}
 
       <div className="field is-horizontal">
         <div className="field-label is-normal">
@@ -193,23 +195,26 @@ const FormCliente = () => {
       </div>
 
       <div className="field is-horizontal">
-        <div className="field-label">
-        </div>
+        <div className="field-label"></div>
         <div className="field-body">
           <div className="field">
             <div className="control">
-              <button type="submit" className="button is-primary mr-1">Guardar</button>
+              <button type="submit" className="button is-primary mr-1">
+                Guardar
+              </button>
               <button
                 type="button"
                 className="button"
-                onClick={ () => cerrarModal() }
-              >Cancelar</button>
+                onClick={() => cerrarModal()}
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         </div>
       </div>
     </form>
   );
-}
- 
+};
+
 export default FormCliente;

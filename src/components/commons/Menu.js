@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Menu = () => {
   return (
@@ -10,9 +10,7 @@ const Menu = () => {
           <span className="icon">
             <i className="fas fa-home"></i>
           </span>
-          <span>
-            Inicio
-          </span>
+          <span>Inicio</span>
         </Link>
       </div>
       <div className="panel-block">
@@ -20,13 +18,11 @@ const Menu = () => {
           <span className="icon">
             <i className="fas fa-users"></i>
           </span>
-          <span>
-            Clientes
-          </span>
+          <span>Clientes</span>
         </Link>
       </div>
     </nav>
   );
-}
- 
+};
+
 export default Menu;
